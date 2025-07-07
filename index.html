@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Journey With You, Muskan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #fff5f7;
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5em;
+      color: #c2185b;
+    }
+
+    p {
+      font-size: 1.3em;
+      margin: 20px 0;
+    }
+
+    button {
+      background-color: #c2185b;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #ad1457;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .music-container {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      width: 300px;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      .music-container {
+        width: 90%;
+        left: 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="music-container">
+    <iframe width="100%" height="80" scrolling="no" frameborder="no"
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/debayan-das/bollywood-romantic-track-mix-piano-instrumental&color=%23c2185b&auto_play=true&loop=true">
+    </iframe>
+  </div>
+
+  <div class="container">
+    <div id="step" class="fade">
+      <h1>Hi Muskan 💖</h1>
+      <p>I've been wanting to tell you something for a while now...</p>
+      <button onclick="nextStep()">Tell Me More</button>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        title: "Hi Muskan 💖",
+        text: "I've been wanting to tell you something for a while now...",
+        button: "Tell Me More"
+      },
+      {
+        title: "You Light Up My Days",
+        text: "Every time you smile, the world feels brighter.",
+        button: "Next"
+      },
+      {
+        title: "You Feel Like Home",
+        text: "Talking to you is the easiest thing... it just feels right.",
+        button: "Keep Going"
+      },
+      {
+        title: "You’re Always on My Mind",
+        text: "From morning thoughts to late-night dreams, it’s you.",
+        button: "One More Step"
+      },
+      {
+        title: "Okay, Deep Breath...",
+        text: "Promise you won’t laugh... 🙈",
+        button: "I Promise"
+      },
+      {
+        title: "Muskan, Will You Go Out With Me?",
+        text: "💌 From Parth, with all my heart.",
+        button: "Yes, I'd love to ❤️",
+        final: true
+      }
+    ];
+
+    let currentStep = 0;
+
+    function nextStep() {
+      currentStep++;
+      const step = steps[currentStep];
+      if (!step) return;
+
+      const container = document.getElementById("step");
+      container.classList.remove("fade");
+      void container.offsetWidth; // reflow to restart animation
+      container.classList.add("fade");
+
+      container.innerHTML = `
+        <h1>${step.title}</h1>
+        <p>${step.text}</p>
+        ${
+          step.final
+            ? `<button onclick="alert('Yay! ❤️')">${step.button}</button>`
+            : `<button onclick="nextStep()">${step.button}</button>`
+        }
+      `;
+    }
+  </script>
+</body>
+</html>
