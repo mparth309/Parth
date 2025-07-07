@@ -153,4 +153,74 @@
     petal.style.left = Math.random() * 100 + 'vw';
     petal.style.animationDuration = 5 + Math.random() * 5 + 's';
     petal.style.opacity = Math.random();
-    docum
+    document.body.appendChild(petal);
+  }
+</script>
+
+<!-- Sections -->
+
+<section class="bg1">
+  <h1>Hi Muskan 💜</h1>
+  <p>This is our story -- from the heart.</p>
+</section>
+
+<section class="bg2">
+  <h1 class="handwritten">I didn't believe in fate… until I met you.</h1>
+</section>
+
+<section class="bg3">
+  <h1>Reasons I Love You 💞</h1>
+  <div class="reasons">
+    <div class="reason-card">Your Smile</div>
+    <div class="reason-card">Your Kindness</div>
+    <div class="reason-card">Your Honesty</div>
+    <div class="reason-card">Your Laugh</div>
+    <div class="reason-card">The Way You Care</div>
+    <div class="reason-card">The Way You Make Me Feel</div>
+  </div>
+</section>
+
+<section class="bg4">
+  <h1 class="heartbeat">My Heart Dances for You</h1>
+  <p>It doesn't just beat -- it lights up every time I think of you.</p>
+</section>
+
+<section class="bg5">
+  <h1 style="color:#b8138f;">My world feels brighter...</h1>
+  <p>...just because you're in it.</p>
+</section>
+
+<section class="bg6 final">
+  <h1>Muskan, will you go out with me? 💍</h1>
+  <button onclick="celebrate()">YES 💖</button>
+  <div id="celebrate" style="margin-top: 20px;"></div>
+</section>
+
+<script>
+  function celebrate() {
+    const container = document.getElementById('celebrate');
+    
+    // Floating heart/sparkle burst
+    for (let i = 0; i < 100; i++) {
+      const emoji = document.createElement('div');
+      emoji.textContent = ['💖','💜','💌','✨','🌟'][Math.floor(Math.random()*5)];
+      emoji.style.position = 'fixed';
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.top = '50vh';
+      emoji.style.fontSize = Math.random() * 20 + 20 + 'px';
+      emoji.style.animation = 'flyUp 2s ease-out forwards';
+      emoji.style.pointerEvents = 'none';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 2000);
+    }
+
+    // Glowing "She said YES!" text
+    const yesText = document.createElement('div');
+    yesText.className = 'yes-text';
+    yesText.textContent = "She said YES!";
+    container.appendChild(yesText);
+  }
+</script>
+
+</body>
+</html>
