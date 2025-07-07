@@ -1,4 +1,5 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<meta name='viewport' content='width=device-width, initial-scale=1'/>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,9 +10,8 @@
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Quicksand', sans-serif;
       scroll-behavior: smooth;
-      background: linear-gradient(to bottom, #e6ccff, #fbeaff);
+      font-family: 'Quicksand', sans-serif;
       overflow-x: hidden;
     }
 
@@ -24,32 +24,41 @@
       padding: 60px 20px;
       text-align: center;
       position: relative;
+      color: #ffffff;
     }
 
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3em;
-      color: #822ea8;
+      margin-bottom: 20px;
     }
 
     p {
       font-size: 1.3em;
-      max-width: 700px;
-      color: #5e2480;
+      max-width: 800px;
     }
 
     .handwritten {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.2em;
+      font-size: 2.5em;
       animation: write 4s steps(30) 1;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 3px solid #822ea8;
+      border-right: 3px solid white;
     }
 
     @keyframes write {
       from { width: 0; }
       to { width: 100%; }
+    }
+
+    .heartbeat {
+      animation: beat 1.5s infinite ease-in-out;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.8; }
     }
 
     .reasons {
@@ -61,12 +70,13 @@
     }
 
     .reason-card {
-      background: white;
+      background: rgba(255, 255, 255, 0.15);
       padding: 20px 30px;
       border-radius: 15px;
-      box-shadow: 0 0 10px rgba(130,46,168,0.2);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
       font-size: 1.2em;
-      color: #6a1b9a;
+      color: #fff;
       transition: transform 0.3s;
     }
 
@@ -74,46 +84,9 @@
       transform: scale(1.05);
     }
 
-    .heartbeat {
-      animation: beat 1.5s infinite ease-in-out;
-      color: #c2185b;
-      font-size: 2.5em;
-    }
-
-    @keyframes beat {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.7; }
-    }
-
-    .shooting-stars {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 80px;
-      background: white;
-      opacity: 0.4;
-      animation: shoot 5s linear infinite;
-    }
-
-    @keyframes shoot {
-      0% { transform: translate(0, 0); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translate(600px, 600px); opacity: 0; }
-    }
-
     .final button {
-      background-color: #822ea8;
-      color: white;
+      background-color: #ffffff;
+      color: #b8138f;
       font-size: 1.2em;
       padding: 15px 40px;
       border: none;
@@ -128,27 +101,41 @@
         opacity: 0;
       }
     }
+
+    /* Unique background classes */
+    .bg1 { background: linear-gradient(to bottom, #b38aff, #e6ccff); }
+    .bg2 {
+      background: radial-gradient(ellipse at top left, #1e0037, #3d0066);
+      overflow: hidden;
+    }
+    .bg3 {
+      background: linear-gradient(to right, #ff9de2, #ffc1f3);
+      background-size: cover;
+    }
+    .bg4 {
+      background: linear-gradient(to bottom, #5e2480, #9d50bb);
+    }
+    .bg5 {
+      background: linear-gradient(135deg, #ffe6f0, #ffccd9);
+    }
+    .bg6 {
+      background: radial-gradient(circle, #1b0037, #2e004f);
+    }
   </style>
 </head>
 <body>
 
 <!-- Sections -->
-
-<section style="background: linear-gradient(to bottom, #ecd9ff, #fff1fb);">
+<section class="bg1">
   <h1>Hi Muskan 💜</h1>
   <p>This is our story -- from the heart.</p>
 </section>
 
-<section style="background: #fcefff;">
-  <div class="shooting-stars">
-    <div class="star" style="top:10%; left:5%; animation-delay: 0s;"></div>
-    <div class="star" style="top:30%; left:20%; animation-delay: 2s;"></div>
-    <div class="star" style="top:50%; left:40%; animation-delay: 4s;"></div>
-  </div>
+<section class="bg2">
   <h1 class="handwritten">I didn't believe in fate… until I met you.</h1>
 </section>
 
-<section>
+<section class="bg3">
   <h1>Reasons I Love You 💞</h1>
   <div class="reasons">
     <div class="reason-card">Your Smile</div>
@@ -160,17 +147,17 @@
   </div>
 </section>
 
-<section>
+<section class="bg4">
   <h1 class="heartbeat">My Heart Dances for You</h1>
   <p>It doesn't just beat -- it lights up every time I think of you.</p>
 </section>
 
-<section>
+<section class="bg5">
   <h1 style="animation: glow 2s infinite alternate; color:#b8138f;">My world feels brighter...</h1>
   <p>...just because you're in it.</p>
 </section>
 
-<section class="final">
+<section class="bg6 final">
   <h1>Muskan, will you go out with me? 💍</h1>
   <button onclick="celebrate()">YES 💖</button>
 </section>
@@ -196,7 +183,6 @@
       el.style.left = Math.random() * 100 + 'vw';
       el.style.top = '50vh';
       el.style.animation = 'flyUp 2s ease-out forwards';
-      el.style.transition = 'transform 2s, opacity 2s';
       burstContainer.appendChild(el);
     }
 
