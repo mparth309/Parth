@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For Muskan 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #ffe6ec, #ffd3e0);
+      overflow: hidden;
+    }
+
+    canvas#hearts {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      padding: 20px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #c2185b;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.3rem;
+      color: #4a4a4a;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background-color: #c2185b;
+      color: white;
+      padding: 14px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ad1457;
+    }
+
+    .fade {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="hearts"></canvas>
+  <div class="container">
+    <div id="step" class="fade">
+      <h1>Hi Muskan 💖</h1>
+      <p>I’ve been wanting to tell you something for a while now...</p>
+      <button onclick="nextStep()">Tell Me More</button>
+    </div>
+  </div>
+
+  <iframe
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/debayan-das/bollywood-romantic-track-mix-piano-instrumental&color=%23c2185b&auto_play=true&loop=true"
+    width="100%" height="80" frameborder="no" scrolling="no"></iframe>
+
+  <script>
+    const steps = [
+      {
+        title: "Hi Muskan 💖",
+        text: "I’ve been wanting to tell you something for a while now...",
+        button: "Tell Me More"
+      },
+      {
+        title: "You Brighten My World",
+        text: "Your smile lights up even my darkest days.",
+        button: "Next"
+      },
+      {
+        title: "You Feel Like Home",
+        text: "Being with you feels calm, safe, and exciting all at once.",
+        button: "Keep Going"
+      },
+      {
+        title: "You're Always On My Mind",
+        text: "From morning to night, you're the one in my thoughts.",
+        button: "Almost There"
+      },
+      {
+        title: "So Here It Is...",
+        text: "With all my heart and a tiny bit of nervousness 🙈",
+        button: "I'm Ready"
+      },
+      {
+        title: "Muskan, Will You Go Out With Me?",
+        text: "💌 From Parth — with all the love, hope, and honesty.",
+        button: "Yes, I'd Love To ❤️",
+        final: true
+      }
+    ];
+
+    let currentStep = 0;
+
+    function nextStep() {
+      currentStep++;
+      const step = steps[currentStep];
+      if (!step) return;
+      const container = document.getElementById("step");
+      container.classList.remove("fade");
+      void container.offsetWidth;
+      container.classList.add("fade");
+      container.innerHTML = `
+        <h1>${step.title}</h1>
+        <p>${step.text}</p>
+        ${
+          step.final
+            ? `<button onclick="alert('Yay! Can’t wait for this journey ❤️')">${step.button}</button>`
+            : `<button onclick="nextStep()">${step.button}</button>`
+        }
+      `;
+    }
+
+    // Heart animation
+    const canvas = document.getElementById("hearts");
+    const ctx = canvas.getContext("2d");
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const hearts = Array.from({ length: 80 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 4 + 2,
+      speed: Math.random() * 1 + 0.5,
+      drift: (Math.random() - 0.5) * 0.5
+    }));
+
+    function drawHeart(x, y, size) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.bezierCurveTo(x, y - size / 2, x - size, y - size / 2, x - size, y);
+      ctx.bezierCurveTo(x - size, y + size, x, y + size * 1.5, x, y + size * 2);
+      ctx.bezierCurveTo(x, y + size * 1.5, x + size, y + size, x + size, y);
+      ctx.bezierCurveTo(x + size, y - size / 2, x, y - size / 2, x, y);
+      ctx.fillStyle = "rgba(255,105,135,0.6)";
+      ctx.fill();
+    }
+
+    function animateHearts() {
+      ctx.clearRect(0, 0, width, height);
+      for (let h of hearts) {
+        drawHeart(h.x, h.y, h.size);
+        h.y -= h.speed;
+        h.x += h.drift;
+        if (h.y < -10) {
+          h.y = height + 10;
+          h.x = Math.random() * width;
+        }
+      }
+      requestAnimationFrame(animateHearts);
+    }
+
+    animateHearts();
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
