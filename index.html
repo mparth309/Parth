@@ -1,196 +1,284 @@
-
+<meta name='viewport' content='width=device-width, initial-scale=1'/># Final HTML with upgraded features including:
+# - Loading screen
+# - Animated transitions
+# - Music controls
+# - Floating heart emojis
+# - Smooth typing and scene flow
+final_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>For Muskan 💖</title>
+  <title>For Muskan 💜</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(135deg, #ffe6ec, #ffd3e0);
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ecd9ff, #ffe6f0);
       overflow: hidden;
     }
 
-    canvas#hearts {
+    #loading {
       position: fixed;
       top: 0; left: 0;
-      z-index: 0;
-      pointer-events: none;
+      width: 100%; height: 100%;
+      background-color: #f4e3ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      animation: fadeOut 2s ease-out 3s forwards;
     }
 
-    .container {
-      position: relative;
-      z-index: 2;
+    #loading h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2em;
+      color: #7e1fa2;
+    }
+
+    #heart-float {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float 10s linear infinite;
+      color: rgba(200, 60, 160, 0.3);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 1;
+      }
+    }
+
+    .scene {
+      position: absolute;
+      width: 100%; height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.2s ease;
       text-align: center;
-      height: 100%;
       padding: 20px;
+    }
+
+    .scene.active {
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 1;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: #c2185b;
-      margin-bottom: 10px;
+      font-size: 2.6em;
+      color: #822ea8;
+      margin-bottom: 15px;
     }
 
     p {
-      font-size: 1.3rem;
-      color: #4a4a4a;
-      margin-bottom: 30px;
+      font-size: 1.4em;
+      color: #5e2480;
+      max-width: 700px;
     }
 
     button {
-      background-color: #c2185b;
+      margin-top: 30px;
+      background-color: #822ea8;
       color: white;
-      padding: 14px 30px;
-      font-size: 1rem;
+      padding: 12px 30px;
+      font-size: 1em;
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
 
     button:hover {
-      background-color: #ad1457;
+      background-color: #6a1b9a;
     }
 
-    .fade {
-      animation: fadeIn 1s ease-in;
+    #music-control {
+      position: fixed;
+      bottom: 15px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #822ea8;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    iframe {
+    audio {
       display: none;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <canvas id="hearts"></canvas>
-  <div class="container">
-    <div id="step" class="fade">
-      <h1>Hi Muskan 💖</h1>
-      <p>I’ve been wanting to tell you something for a while now...</p>
-      <button onclick="nextStep()">Tell Me More</button>
-    </div>
-  </div>
 
-  <iframe
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/debayan-das/bollywood-romantic-track-mix-piano-instrumental&color=%23c2185b&auto_play=true&loop=true"
-    width="100%" height="80" frameborder="no" scrolling="no"></iframe>
+<div id="loading">
+  <h1>Preparing your love story… 💖</h1>
+</div>
 
-  <script>
-    const steps = [
-      {
-        title: "Hi Muskan 💖",
-        text: "I’ve been wanting to tell you something for a while now...",
-        button: "Tell Me More"
-      },
-      {
-        title: "You Brighten My World",
-        text: "Your smile lights up even my darkest days.",
-        button: "Next"
-      },
-      {
-        title: "You Feel Like Home",
-        text: "Being with you feels calm, safe, and exciting all at once.",
-        button: "Keep Going"
-      },
-      {
-        title: "You're Always On My Mind",
-        text: "From morning to night, you're the one in my thoughts.",
-        button: "Almost There"
-      },
-      {
-        title: "So Here It Is...",
-        text: "With all my heart and a tiny bit of nervousness 🙈",
-        button: "I'm Ready"
-      },
-      {
-        title: "Muskan, Will You Go Out With Me?",
-        text: "💌 From Parth — with all the love, hope, and honesty.",
-        button: "Yes, I'd Love To ❤️",
-        final: true
-      }
-    ];
+<!-- Floating hearts -->
+<div id="heart-float"></div>
 
-    let currentStep = 0;
+<!-- Music control -->
+<button id="music-control">Pause Music</button>
+<audio id="bg-music" autoplay loop>
+  <source src="https://files.catbox.moe/7p9r6r.mp3" type="audio/mp3">
+</audio>
 
-    function nextStep() {
-      currentStep++;
-      const step = steps[currentStep];
-      if (!step) return;
-      const container = document.getElementById("step");
-      container.classList.remove("fade");
-      void container.offsetWidth;
-      container.classList.add("fade");
-      container.innerHTML = `
-        <h1>${step.title}</h1>
-        <p>${step.text}</p>
-        ${
-          step.final
-            ? `<button onclick="alert('Yay! Can’t wait for this journey ❤️')">${step.button}</button>`
-            : `<button onclick="nextStep()">${step.button}</button>`
+<!-- Scenes -->
+<div class="scene active">
+  <h1>This is for you, Muskan 💜</h1>
+  <p>I've created something from the heart. Let's begin the journey...</p>
+  <button onclick="nextScene()">Start</button>
+</div>
+
+<div class="scene">
+  <h1>You Light Up My World</h1>
+  <p>Your smile turns the ordinary into magic.</p>
+  <button onclick="nextScene()">Next</button>
+</div>
+
+<div class="scene">
+  <h1>Lavender Skies Remind Me of You</h1>
+  <p>Soft, calming, and endlessly beautiful.</p>
+  <button onclick="nextScene()">Next</button>
+</div>
+
+<div class="scene">
+  <h1>With You, Time Feels Right</h1>
+  <p>I find joy in your presence. And I hope you feel it too.</p>
+  <button onclick="nextScene()">Almost There</button>
+</div>
+
+<div class="scene">
+  <h1>Muskan,</h1>
+  <p>Will you go out with me? 💌<br><br>— Parth</p>
+  <button onclick="celebrate()">Yes! 💖</button>
+</div>
+
+<canvas id="confetti" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:999;"></canvas>
+
+<script>
+  // Scene switching
+  let current = 0;
+  const scenes = document.querySelectorAll('.scene');
+
+  function nextScene() {
+    if (current < scenes.length - 1) {
+      scenes[current].classList.remove('active');
+      current++;
+      scenes[current].classList.add('active');
+    }
+  }
+
+  // Music controls
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-control");
+  musicBtn.onclick = () => {
+    if (music.paused) {
+      music.play();
+      musicBtn.textContent = "Pause Music";
+    } else {
+      music.pause();
+      musicBtn.textContent = "Play Music";
+    }
+  }
+
+  // Floating hearts
+  const heartContainer = document.getElementById("heart-float");
+  for (let i = 0; i < 40; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.top = `${Math.random() * 100}%`;
+    heart.textContent = ["💜", "💖", "💌"][Math.floor(Math.random() * 3)];
+    heart.style.animationDelay = `${Math.random() * 10}s`;
+    heartContainer.appendChild(heart);
+  }
+
+  // Confetti
+  function celebrate() {
+    const canvas = document.getElementById('confetti');
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 150; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 6 + 4,
+        c: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        s: Math.random() * 3 + 2
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of pieces) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+        ctx.fillStyle = p.c;
+        ctx.fill();
+        p.y += p.s;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
         }
-      `;
-    }
-
-    // Heart animation
-    const canvas = document.getElementById("hearts");
-    const ctx = canvas.getContext("2d");
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    const hearts = Array.from({ length: 80 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 4 + 2,
-      speed: Math.random() * 1 + 0.5,
-      drift: (Math.random() - 0.5) * 0.5
-    }));
-
-    function drawHeart(x, y, size) {
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.bezierCurveTo(x, y - size / 2, x - size, y - size / 2, x - size, y);
-      ctx.bezierCurveTo(x - size, y + size, x, y + size * 1.5, x, y + size * 2);
-      ctx.bezierCurveTo(x, y + size * 1.5, x + size, y + size, x + size, y);
-      ctx.bezierCurveTo(x + size, y - size / 2, x, y - size / 2, x, y);
-      ctx.fillStyle = "rgba(255,105,135,0.6)";
-      ctx.fill();
-    }
-
-    function animateHearts() {
-      ctx.clearRect(0, 0, width, height);
-      for (let h of hearts) {
-        drawHeart(h.x, h.y, h.size);
-        h.y -= h.speed;
-        h.x += h.drift;
-        if (h.y < -10) {
-          h.y = height + 10;
-          h.x = Math.random() * width;
-        }
       }
-      requestAnimationFrame(animateHearts);
+      requestAnimationFrame(draw);
     }
-
-    animateHearts();
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-  </script>
+    draw();
+    alert("She said YES! 🎉💖");
+  }
+</script>
 </body>
 </html>
+"""
+
+# Save final HTML to a file
+final_html_path = "/mnt/data/Extraordinary_Love_Proposal.html"
+with open(final_html_path, "w", encoding="utf-8") as f:
+    f.write(final_html)
+
+# Create ZIP with index.html
+final_zip_path = "/mnt/data/Extraordinary_Love_Proposal.zip"
+with zipfile.ZipFile(final_zip_path, "w") as zipf:
+    zipf.write(final_html_path, arcname="index.html")
+
+final_zip_path
+
