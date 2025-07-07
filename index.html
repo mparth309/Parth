@@ -1,10 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/># Final HTML with upgraded features including:
-# - Loading screen
-# - Animated transitions
-# - Music controls
-# - Floating heart emojis
-# - Smooth typing and scene flow
-final_html = """
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -268,17 +262,5 @@ final_html = """
 </script>
 </body>
 </html>
-"""
 
-# Save final HTML to a file
-final_html_path = "/mnt/data/Extraordinary_Love_Proposal.html"
-with open(final_html_path, "w", encoding="utf-8") as f:
-    f.write(final_html)
-
-# Create ZIP with index.html
-final_zip_path = "/mnt/data/Extraordinary_Love_Proposal.zip"
-with zipfile.ZipFile(final_zip_path, "w") as zipf:
-    zipf.write(final_html_path, arcname="index.html")
-
-final_zip_path
 
